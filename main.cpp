@@ -46,7 +46,6 @@ Life::Life(InputIt begin, InputIt end)
 void Life::tick() {
   std::vector<Cell> to_die;
   std::vector<Cell> to_create;
-  std::vector<Cell> all_neighbors;
 
   // find cells that will die
   std::copy_if(grid.begin(), grid.end(), std::back_inserter(to_die),
@@ -56,24 +55,22 @@ void Life::tick() {
                  return alive_neighbors < 2 || alive_neighbors > 3;
                });
 
-  // collect neighbors of all cells
-  std::for_each(grid.begin(), grid.end(),
-                [&](const auto& cell){
-                  const auto neighbors = neighbors_of(cell);
-                  std::copy(neighbors.begin(), neighbors.end(), std::back_inserter(all_neighbors));
-                });
-
-  // find cells that will be created
-  std::copy_if(all_neighbors.begin(), all_neighbors.end(), std::back_inserter(to_create),
-               [&](const auto& cell) {
-                 if (grid.find(cell) != grid.end()) return false;
-                 const auto neighbors = neighbors_of(cell);
-                 const auto alive_neighbors = n_alive_neighbors(neighbors);
-                 return alive_neighbors == 3;
-               });
+  // find cell that will reproduce
+  for (const auto& cell : grid) {
+    const auto neighbors = neighbors_of(cell);
+    for (const auto& neighbor : neighbors) {
+      if (grid.find(neighbor) != grid.end()) continue;
+      const auto neighbor_neighbors = neighbors_of(neighbor);
+      const auto alive_neighbors = n_alive_neighbors(neighbor_neighbors);
+      if (alive_neighbors == 3)
+	to_create.push_back(neighbor);
+    }
+  }
 
   // kill cells
-  std::for_each(to_die.begin(), to_die.end(), [&](const auto& cell){ grid.erase(cell); });
+  for (const auto& cell : to_die)
+    grid.erase(cell);
+
   // reproduce cells
   grid.insert(to_create.begin(), to_create.end());
 }
