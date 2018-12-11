@@ -98,22 +98,21 @@ std::ostream& operator<<(std::ostream& out, const Life& life) {
   if (life.grid.empty()) return out;
   out << *life.grid.begin();
   std::for_each(std::next(life.grid.begin()), life.grid.end(),
-                [&](const auto& cell){
-                  out << '\n' << cell;
-                });
+		[&](const auto& cell){ out << '\n' << cell; });
   return out;
 }
 
 int main() {
-  std::array<Cell, 3> seed { Cell(-1, 0), Cell(0, 0), Cell(1, 0) };
-  Life life(seed.begin(), seed.end());
+  std::array<Cell, 3> blinker { Cell(-1, 0), Cell(0, 0), Cell(1, 0) };
+  std::array<Cell, 6> toad { Cell(0, 0), Cell(1, 0), Cell(2, 0),
+			     Cell(1, 1), Cell(2, 1), Cell(3, 1) };
+
+  Life life(toad.begin(), toad.end());
 
   std::cout << life << '\n';
-  
   for (int i = 0; i < 6; ++i) {
     life.tick();    
     std::cout << '\n' << life << '\n';
   }
 }
-
 
