@@ -50,27 +50,27 @@ void Life::tick() {
 
   // find cells that will die
   std::copy_if(grid.begin(), grid.end(), std::back_inserter(to_die),
-	       [&](const auto& cell){
-		 const auto neighbors = neighbors_of(cell);
-		 const auto alive_neighbors = n_alive_neighbors(neighbors);
-		 return alive_neighbors < 2 || alive_neighbors > 3;
-	       });
+               [&](const auto& cell){
+                 const auto neighbors = neighbors_of(cell);
+                 const auto alive_neighbors = n_alive_neighbors(neighbors);
+                 return alive_neighbors < 2 || alive_neighbors > 3;
+               });
 
   // collect neighbors of all cells
   std::for_each(grid.begin(), grid.end(),
-		[&](const auto& cell){
-		  const auto neighbors = neighbors_of(cell);
-		  std::copy(neighbors.begin(), neighbors.end(), std::back_inserter(all_neighbors));
-		});
+                [&](const auto& cell){
+                  const auto neighbors = neighbors_of(cell);
+                  std::copy(neighbors.begin(), neighbors.end(), std::back_inserter(all_neighbors));
+                });
 
   // find cells that will be created
   std::copy_if(all_neighbors.begin(), all_neighbors.end(), std::back_inserter(to_create),
-	       [&](const auto& cell) {
-		 if (grid.find(cell) != grid.end()) return false;
-		 const auto neighbors = neighbors_of(cell);
-		 const auto alive_neighbors = n_alive_neighbors(neighbors);
-		 return alive_neighbors == 3;
-	       });
+               [&](const auto& cell) {
+                 if (grid.find(cell) != grid.end()) return false;
+                 const auto neighbors = neighbors_of(cell);
+                 const auto alive_neighbors = n_alive_neighbors(neighbors);
+                 return alive_neighbors == 3;
+               });
 
   // kill cells
   std::for_each(to_die.begin(), to_die.end(), [&](const auto& cell){ grid.erase(cell); });
@@ -80,27 +80,27 @@ void Life::tick() {
 
 std::array<Cell, 8> Life::neighbors_of(const Cell& cell) const {
   return { Cell(cell.first - 1, cell.second + 1),
-	   Cell(cell.first, cell.second + 1),
-	   Cell(cell.first + 1, cell.second + 1),
-	   Cell(cell.first + 1, cell.second),
-	   Cell(cell.first + 1, cell.second - 1),
-	   Cell(cell.first, cell.second - 1),
-	   Cell(cell.first - 1, cell.second - 1),
-	   Cell(cell.first - 1, cell.second) };
+           Cell(cell.first, cell.second + 1),
+           Cell(cell.first + 1, cell.second + 1),
+           Cell(cell.first + 1, cell.second),
+           Cell(cell.first + 1, cell.second - 1),
+           Cell(cell.first, cell.second - 1),
+           Cell(cell.first - 1, cell.second - 1),
+           Cell(cell.first - 1, cell.second) };
 }
 
 int Life::n_alive_neighbors(const std::array<Cell, 8>& neighbors) const {
   return std::count_if(neighbors.begin(), neighbors.end(),
-		       [&](const auto& cell){ return grid.find(cell) != grid.end(); });
+                       [&](const auto& cell){ return grid.find(cell) != grid.end(); });
 }
 
 std::ostream& operator<<(std::ostream& out, const Life& life) {
   if (life.grid.empty()) return out;
   out << *life.grid.begin();
   std::for_each(std::next(life.grid.begin()), life.grid.end(),
-		[&](const auto& cell){
-		  out << '\n' << cell;
-		});
+                [&](const auto& cell){
+                  out << '\n' << cell;
+                });
   return out;
 }
 
