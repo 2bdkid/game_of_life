@@ -94,9 +94,11 @@ int Life::n_alive_neighbors(const std::array<Cell, 8>& neighbors) const {
 }
 
 std::ostream& operator<<(std::ostream& out, const Life& life) {
-  std::for_each(life.grid.begin(), life.grid.end(),
+  if (life.grid.empty()) return out;
+  out << *life.grid.begin();
+  std::for_each(std::next(life.grid.begin()), life.grid.end(),
 		[&](const auto& cell){
-		  out << cell << '\n';
+		  out << '\n' << cell;
 		});
   return out;
 }
@@ -105,9 +107,11 @@ int main() {
   std::array<Cell, 3> seed { Cell(-1, 0), Cell(0, 0), Cell(1, 0) };
   Life life(seed.begin(), seed.end());
 
-  for (int i = 0; i < 5; ++i) {
-    std::cout << life << '\n';
-    life.tick();
+  std::cout << life << '\n';
+  
+  for (int i = 0; i < 6; ++i) {
+    life.tick();    
+    std::cout << '\n' << life << '\n';
   }
 }
 
