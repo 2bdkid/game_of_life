@@ -49,7 +49,7 @@ void Life::tick() {
 
   // find cells that will die
   std::copy_if(grid.begin(), grid.end(), std::back_inserter(to_die),
-               [&](const auto& cell){
+               [this](const auto& cell){
                  const auto neighbors = neighbors_of(cell);
                  const auto alive_neighbors = n_alive_neighbors(neighbors);
                  return alive_neighbors < 2 || alive_neighbors > 3;
@@ -88,14 +88,14 @@ std::array<Cell, 8> Life::neighbors_of(const Cell& cell) const {
 
 int Life::n_alive_neighbors(const std::array<Cell, 8>& neighbors) const {
   return std::count_if(neighbors.begin(), neighbors.end(),
-                       [&](const auto& cell){ return grid.find(cell) != grid.end(); });
+                       [this](const auto& cell){ return grid.find(cell) != grid.end(); });
 }
 
 std::ostream& operator<<(std::ostream& out, const Life& life) {
   if (life.grid.empty()) return out;
   out << *life.grid.begin();
   std::for_each(std::next(life.grid.begin()), life.grid.end(),
-                [&](const auto& cell){ out << '\n' << cell; });
+                [&out](const auto& cell){ out << '\n' << cell; });
   return out;
 }
 
