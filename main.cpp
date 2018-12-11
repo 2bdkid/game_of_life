@@ -14,7 +14,7 @@ namespace std {
   template<>
   struct hash<Cell> {
     std::size_t operator()(const Cell& cell) const {
-      std::hash<int> hasher;
+      const std::hash<int> hasher;
       return hasher(cell.first) & hasher(cell.second);
     }
   };
