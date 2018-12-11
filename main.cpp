@@ -34,8 +34,8 @@ public:
   friend std::ostream& operator<<(std::ostream& out, const Life& life);
   
 private:
-  std::array<Cell, 8> neighbors_of(const Cell& cell) const;
   std::unordered_set<Cell> grid;
+  std::array<Cell, 8> neighbors_of(const Cell& cell) const;
   int n_alive_neighbors(const std::array<Cell, 8>& neighbors) const;
 };
 
