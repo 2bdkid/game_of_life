@@ -6,6 +6,7 @@
 #include <iterator>
 #include <cstddef>
 #include <algorithm>
+#include <utility>
 
 using Cell = std::pair<int, int>;
 
