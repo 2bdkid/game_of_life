@@ -13,8 +13,8 @@
 
 #include "Viewport.hpp"
 
-using Cell = std::pair<int, int>;
 class Viewport;
+using Cell = std::pair<int, int>;
 
 namespace std {
   template<>
@@ -34,6 +34,8 @@ public:
   
   void tick();
   Viewport view(Cell top_left, Cell bottom_right) const;
+  bool has_living_cells() const;
+
   friend class Viewport;
   friend std::ostream& operator<<(std::ostream& out, const Viewport& view);
   
@@ -41,6 +43,7 @@ private:
   std::unordered_set<Cell> grid;
   std::array<Cell, 8> neighbors_of(const Cell& cell) const;
   int n_alive_neighbors(const std::array<Cell, 8>& neighbors) const;
+  bool alive(const Cell& cell) const;
 };
 
 #endif

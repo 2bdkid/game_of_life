@@ -1,5 +1,8 @@
-#ifndef LIFE_VIEWPORT_HPP
-#define LIFE_VIEWPORT_HPP
+#ifndef VIEWPORT_HPP
+#define VIEWPORT_HPP
+
+#include <iostream>
+#include <utility>
 
 #include "Life.hpp"
 

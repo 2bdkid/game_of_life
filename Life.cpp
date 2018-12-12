@@ -20,7 +20,7 @@ void Life::tick() {
   for (const auto& cell : grid) {
     const auto neighbors = neighbors_of(cell);
     for (const auto& neighbor : neighbors) {
-      if (grid.find(neighbor) != grid.end()) continue;
+      if (!alive(cell)) continue;
       const auto neighbor_neighbors = neighbors_of(neighbor);
       const auto alive_neighbors = n_alive_neighbors(neighbor_neighbors);
       if (alive_neighbors == 3)
@@ -48,7 +48,14 @@ std::array<Cell, 8> Life::neighbors_of(const Cell& cell) const {
 }
 
 int Life::n_alive_neighbors(const std::array<Cell, 8>& neighbors) const {
-  return std::count_if(neighbors.begin(), neighbors.end(),
-                       [this](const auto& cell){ return grid.find(cell) != grid.end(); });
+  return std::count_if(neighbors.begin(), neighbors.end(), std::bind(&Life::alive, this, std::placeholders::_1));
+}
+
+bool Life::alive(const Cell& cell) const {
+  return grid.find(cell) != grid.end();
+}
+
+bool Life::has_living_cells() const {
+  return !grid.empty();
 }
 

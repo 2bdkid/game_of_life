@@ -14,13 +14,13 @@ int main() {
 			    
 
   Life life(seed.begin(), seed.end());
-  Cell tl(-3, 3);
-  Cell br(3, -3);
+  Cell tl(-5, 5);
+  Cell br(5, -5);
 
   std::cout << life.view(tl, br) << '\n';
-  for (int i = 0; i < 100; ++i) {
+  while (life.has_living_cells()) {
     life.tick();    
-    std::cout << life.view(tl, br) << '\n';
+    std::cout << '\n' << life.view(tl, br) << '\n';
   }
 }
 
