@@ -16,7 +16,7 @@ std::ostream& operator<<(std::ostream& out, const Viewport& view) {
       if (view.life.alive({x, y}))
 	out << 'O';
       else
-	out << '.';
+	out << ' ';
     }
     out << "|\n";
   }

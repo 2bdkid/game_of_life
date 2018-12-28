@@ -12,9 +12,9 @@
 #include <utility>
 
 #include "Viewport.hpp"
+#include "Cell.hpp"
 
 class Viewport;
-using Cell = std::pair<int, int>;
 
 namespace std {
   template<>

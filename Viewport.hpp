@@ -5,9 +5,9 @@
 #include <utility>
 
 #include "Life.hpp"
+#include "Cell.hpp"
 
 class Life;
-using Cell = std::pair<int, int>;
 
 class Viewport {
 public:
