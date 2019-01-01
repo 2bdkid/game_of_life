@@ -1,4 +1,5 @@
 #include "Viewport.hpp"
+#include "Life.hpp"
 
 Viewport::Viewport(const Life& life, Cell top_left, Cell bottom_right)
   : life(life), top_left(top_left), bottom_right(bottom_right) {}

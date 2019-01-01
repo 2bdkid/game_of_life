@@ -2,19 +2,11 @@
 #define GAME_LIFE_HPP
 
 #include <unordered_set>
-#include <iostream>
-#include <vector>
-#include <functional>
 #include <array>
-#include <iterator>
-#include <cstddef>
-#include <algorithm>
-#include <utility>
+#include <functional>
 
-#include "Viewport.hpp"
 #include "Cell.hpp"
-
-class Viewport;
+#include "Viewport.hpp"
 
 namespace std {
   template<>

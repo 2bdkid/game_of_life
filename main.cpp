@@ -11,8 +11,8 @@ int main() {
 			      Cell(4, 4), Cell(6, 3), Cell(6, 4), Cell(6, 5), Cell(7, 4) };
   
   Life life(seed.begin(), seed.end());
-  Cell tl(-50, 20);
-  Cell br(50, -20);
+  Cell tl(-50, 10);
+  Cell br(50, -10);
   
   std::cout << life.view(tl, br) << '\n';
   while (life.has_living_cells()) {

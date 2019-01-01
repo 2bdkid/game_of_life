@@ -1,4 +1,11 @@
+#include <vector>
+#include <iterator>
+#include <utility>
+#include <algorithm>
+
 #include "Life.hpp"
+#include "Viewport.hpp"
+
 
 Viewport Life::view(Cell top_left, Cell bottom_right) const {
   return { *this, top_left, bottom_right };
@@ -48,7 +55,9 @@ std::array<Cell, 8> Life::neighbors_of(const Cell& cell) const {
 }
 
 int Life::n_alive_neighbors(const std::array<Cell, 8>& neighbors) const {
-  return std::count_if(neighbors.begin(), neighbors.end(), std::bind(&Life::alive, this, std::placeholders::_1));
+  return std::count_if(neighbors.begin(), neighbors.end(), [this](const auto& neighbor) {
+							     return alive(neighbor);
+							   });
 }
 
 bool Life::alive(const Cell& cell) const {

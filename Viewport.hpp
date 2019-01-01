@@ -2,9 +2,7 @@
 #define VIEWPORT_HPP
 
 #include <iostream>
-#include <utility>
 
-#include "Life.hpp"
 #include "Cell.hpp"
 
 class Life;
